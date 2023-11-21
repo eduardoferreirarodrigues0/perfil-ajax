@@ -16,8 +16,7 @@ function hide(){
 image.addEventListener('click', show);
 close.addEventListener('click', hide);
 
-
-document.getElementById("buscar-github").addEventListener("click", function() {
+function test(e) {
     const username = document.getElementById("usuario-github").value;
     const url = `https://api.github.com/users/${username}`;
 
@@ -31,6 +30,7 @@ document.getElementById("buscar-github").addEventListener("click", function() {
         .then(data => {
             document.getElementById("nome-usuario").textContent = data.name || data.login;
             document.getElementById("bio-usuario").textContent = data.bio || 'Bio não disponível';
+            document.getElementById("img-usuario").style.backgroundImage=`url(${data.avatar_url})`;
             document.getElementById("imagem-usuario").src = data.avatar_url;
             document.getElementById("imagem-usuario").alt = `Imagem de ${data.login}`;
             document.getElementById("seguindo").textContent = data.following;
@@ -43,4 +43,10 @@ document.getElementById("buscar-github").addEventListener("click", function() {
             console.error('Erro:', error);
             alert('Usuário não encontrado!')
         });
+}
+
+document.getElementById("buscar-github").addEventListener("click", test);
+
+document.getElementById("usuario-github").addEventListener("keyup",function(e){
+    if (e.keyCode===13) test(e)
 });
